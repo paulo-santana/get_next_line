@@ -30,8 +30,9 @@ static size_t	move_buffer(char buffer[])
 	while (i < BUFFER_SIZE && buffer[i] != '\n')
 		i++;
 	if (i == BUFFER_SIZE)
-		return (0);
-	bytes_left = BUFFER_SIZE - i - 1;
+		bytes_left = 0;
+	else
+		bytes_left = BUFFER_SIZE - i - 1;
 	j = 0;
 	while (j < BUFFER_SIZE)
 	{
