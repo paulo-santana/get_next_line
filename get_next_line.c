@@ -1,8 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+/*   get_next_line.c                                    :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 22:40:08 by psergio-          #+#    #+#             */
@@ -64,31 +63,31 @@ static char	*merge_buffer_n(char *dest, char *src, size_t n)
 	return (result);
 }
 
-static int	append_next_chunk(int fd, char **line)
+static int	append_next_chunk(int fd, char **new_line)
 {
 	static char	buffer[BUFFER_SIZE + 1];
-	int			n;
+	int			bytes_left;
 	int			i;
-	char		*result;
+	char		*merged_str;
 
-	n = move_buffer(buffer);
-	if (n == 0)
-		n = read(fd, buffer, BUFFER_SIZE);
-	if (n == 0)
-		return (GNL_END_OF_FILE);
-	else if (n == -1)
+	bytes_left = move_buffer(buffer);
+	if (bytes_left == 0)
+		bytes_left = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_left == -1)
 		return (GNL_ERROR);
 	i = 0;
-	while (i < n && buffer[i] != '\n')
+	while (i < bytes_left && buffer[i] != '\n')
 		i++;
-	result = merge_buffer_n(*line, buffer, i);
-	if (!result)
+	merged_str = merge_buffer_n(*new_line, buffer, i);
+	if (!merged_str)
 		return (GNL_ERROR);
-	if (*line)
-		free(*line);
-	*line = result;
+	if (*new_line)
+		free(*new_line);
+	*new_line = merged_str;
 	if (buffer[i] == '\n')
 		return (1);
+	if (bytes_left == 0)
+		return (GNL_END_OF_FILE);
 	return (0);
 }
 
@@ -102,11 +101,11 @@ int	get_next_line(int fd, char **line)
 	while (!finished)
 	{
 		finished = append_next_chunk(fd, &new_line);
+		*line = new_line;
 		if (finished == GNL_END_OF_FILE)
 			return (0);
 		if (finished == GNL_ERROR)
 			return (-1);
 	}
-	*line = new_line;
 	return (1);
 }
