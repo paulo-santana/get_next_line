@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/01 22:40:08 by psergio-          #+#    #+#             */
-/*   Updated: 2021/06/01 23:19:05 by psergio-         ###   ########.fr       */
+/*   Created: 2021/06/05 18:06:57 by psergio-          #+#    #+#             */
+/*   Updated: 2021/06/05 18:06:57 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +65,8 @@ static char	*merge_buffer_n(char *dest, char *src, size_t n)
 	return (result);
 }
 
-static int	append_next_chunk(int fd, char **new_line)
+static int	append_next_chunk(int fd, char **new_line, char *buffer)
 {
-	static char	buffer[BUFFER_SIZE + 1];
 	int			bytes_left;
 	int			i;
 	char		*merged_str;
@@ -94,14 +94,15 @@ static int	append_next_chunk(int fd, char **new_line)
 
 int	get_next_line(int fd, char **line)
 {
-	char	*new_line;
-	int		finished;
+	char		*new_line;
+	int			finished;
+	static char	buffer[BUFFER_SIZE + 1];
 
 	new_line = NULL;
 	finished = 0;
 	while (!finished)
 	{
-		finished = append_next_chunk(fd, &new_line);
+		finished = append_next_chunk(fd, &new_line, buffer);
 		*line = new_line;
 		if (finished == GNL_END_OF_FILE)
 			return (0);
