@@ -12,6 +12,22 @@
 
 #include "get_next_line.h"
 
+void	*ft_calloc(size_t count, size_t size)
+{
+	size_t	i;
+	size_t	full_size;
+	char	*buffer;
+
+	full_size = count * size;
+	buffer = malloc(full_size);
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	while (i < full_size)
+		buffer[i] = 0;
+	return (buffer);
+}
+
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t	i;

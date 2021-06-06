@@ -111,7 +111,7 @@ int	get_next_line(int fd, char **line)
 		return (-1);
 	finished = 0;
 	if (!buffers[fd])
-		buffers[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		buffers[fd] = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffers[fd])
 		return (-1);
 	while (!finished)
