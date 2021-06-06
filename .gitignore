@@ -1,5 +1,9 @@
-main.c
 main
 arquivo.txt
 Makefile
 *.o
+gnlTester
+files
+main.c
+.cache
+compile_commands.json
