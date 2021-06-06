@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 18:06:57 by psergio-          #+#    #+#             */
-/*   Updated: 2021/06/05 18:06:57 by psergio-         ###   ########.fr       */
+/*   Updated: 2021/06/06 17:59:05 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,12 @@ int	get_next_line(int fd, char **line)
 	{
 		finished = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
+		if (finished == GNL_END_OF_LINE || finished == GNL_ERROR)
+			clear_buffer(&buffers[fd]);
 		if (finished == GNL_END_OF_FILE)
-			return (clear_buffer(&buffers[fd]), 0);
+			return (0);
 		if (finished == GNL_ERROR)
-			return (clear_buffer(&buffers[fd]), -1);
+			return (-1);
 	}
 	return (1);
 }
