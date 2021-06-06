@@ -24,7 +24,7 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	i = 0;
 	while (i < full_size)
-		buffer[i] = 0;
+		buffer[i++] = 0;
 	return (buffer);
 }
 
