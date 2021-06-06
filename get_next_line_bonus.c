@@ -120,7 +120,7 @@ int	get_next_line(int fd, char **line)
 		if (finished == GNL_END_OF_FILE)
 			return (clear_buffer(&buffers[fd]), 0);
 		if (finished == GNL_ERROR)
-			return (-1);
+			return (clear_buffer(&buffers[fd]), -1);
 	}
 	return (1);
 }
