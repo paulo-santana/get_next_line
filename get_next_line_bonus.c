@@ -105,9 +105,10 @@ int	get_next_line(int fd, char **line)
 	int			finished;
 	static char	*buffers[FD_SETSIZE];
 
-	if (fd < 0 || fd > FD_SETSIZE)
-		return (-1);
 	new_line = NULL;
+	*line = new_line;
+	if (fd < 0 || fd >= FD_SETSIZE)
+		return (-1);
 	finished = 0;
 	if (!buffers[fd])
 		buffers[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
