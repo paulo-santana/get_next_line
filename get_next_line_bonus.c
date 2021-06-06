@@ -98,6 +98,8 @@ int	get_next_line(int fd, char **line)
 	int			finished;
 	static char	buffer[FD_SETSIZE][BUFFER_SIZE + 1];
 
+	if (fd < 0 || fd > FD_SETSIZE)
+		return (-1);
 	new_line = NULL;
 	finished = 0;
 	while (!finished)
