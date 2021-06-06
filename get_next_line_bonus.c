@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 18:06:57 by psergio-          #+#    #+#             */
-/*   Updated: 2021/06/06 17:59:05 by psergio-         ###   ########.fr       */
+/*   Updated: 2021/06/06 18:34:52 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	get_next_line(int fd, char **line)
 	{
 		finished = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
-		if (finished == GNL_END_OF_LINE || finished == GNL_ERROR)
+		if (finished == GNL_END_OF_FILE || finished == GNL_ERROR)
 			clear_buffer(&buffers[fd]);
 		if (finished == GNL_END_OF_FILE)
 			return (0);
