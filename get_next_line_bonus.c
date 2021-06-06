@@ -96,13 +96,13 @@ int	get_next_line(int fd, char **line)
 {
 	char		*new_line;
 	int			finished;
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[FD_SETSIZE][BUFFER_SIZE + 1];
 
 	new_line = NULL;
 	finished = 0;
 	while (!finished)
 	{
-		finished = append_next_chunk(fd, &new_line, buffer);
+		finished = append_next_chunk(fd, &new_line, buffer[fd]);
 		*line = new_line;
 		if (finished == GNL_END_OF_FILE)
 			return (0);
