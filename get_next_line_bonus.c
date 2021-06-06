@@ -12,6 +12,13 @@
 
 #include "get_next_line.h"
 
+void	clear_buffer(char **buffer)
+{
+	if (*buffer)
+		free(*buffer);
+	*buffer = NULL;
+}
+
 /*
  * Searches the buffer for a newline character and moves all of the subsequent
  * characteres to the beginning of the buffer, filling the end with nul
@@ -96,18 +103,22 @@ int	get_next_line(int fd, char **line)
 {
 	char		*new_line;
 	int			finished;
-	static char	buffer[FD_SETSIZE][BUFFER_SIZE + 1];
+	static char	*buffers[FD_SETSIZE];
 
 	if (fd < 0 || fd > FD_SETSIZE)
 		return (-1);
 	new_line = NULL;
 	finished = 0;
+	if (!buffers[fd])
+		buffers[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffers[fd])
+		return (-1);
 	while (!finished)
 	{
-		finished = append_next_chunk(fd, &new_line, buffer[fd]);
+		finished = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
 		if (finished == GNL_END_OF_FILE)
-			return (0);
+			return (clear_buffer(&buffers[fd]), 0);
 		if (finished == GNL_ERROR)
 			return (-1);
 	}
