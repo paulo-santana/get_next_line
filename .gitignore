@@ -7,3 +7,4 @@ files
 main.c
 .cache
 compile_commands.json
+a.out

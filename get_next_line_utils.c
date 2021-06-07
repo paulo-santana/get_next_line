@@ -12,27 +12,6 @@
 
 #include "get_next_line.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	size_t	i;
-	char	*s;
-	char	*d;
-
-	i = -1;
-	s = (char *)src;
-	d = (char *)dest;
-	if (dest < src)
-		while (++i < n)
-			d[i] = s[i];
-	else if (dest > src)
-	{
-		i++;
-		while (i < n--)
-			d[n] = s[n];
-	}
-	return (dest);
-}
-
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	i;
