@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 18:06:57 by psergio-          #+#    #+#             */
-/*   Updated: 2021/06/06 18:34:52 by psergio-         ###   ########.fr       */
+/*   Updated: 2021/06/08 07:57:52 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*merge_buffer_n(char *dest, char *src, size_t n)
 	result[0] = '\0';
 	if (dest)
 		ft_strlcat(result, dest, dest_len + 1);
-	ft_strlcat(result, src, result_len + 1);
+	ft_strlcat(result + dest_len, src, n + 1);
 	return (result);
 }
 

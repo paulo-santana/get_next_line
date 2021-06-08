@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 11:46:38 by psergio-          #+#    #+#             */
-/*   Updated: 2021/05/31 11:46:38 by psergio-         ###   ########.fr       */
+/*   Updated: 2021/06/08 07:57:47 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <sys/select.h>
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
-void	*ft_calloc(size_t count, size_t size);
 
 /**
  * Retrieves a string that ends with a newline charactere from the file

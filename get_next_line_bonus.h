@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 11:46:38 by psergio-          #+#    #+#             */
-/*   Updated: 2021/06/06 17:59:56 by psergio-         ###   ########.fr       */
+/*   Updated: 2021/06/08 07:57:49 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	*ft_calloc(size_t count, size_t size);
 
 int		get_next_line(int fd, char **line);
 
-//# define GNL_ERROR -1
-//# define GNL_END_OF_LINE 1
-//# define GNL_END_OF_FILE 2
 # define GNL_ERROR -1
 # define GNL_END_OF_FILE 0
 # define GNL_LINE_READ 1
