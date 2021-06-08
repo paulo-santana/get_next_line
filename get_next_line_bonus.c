@@ -118,12 +118,12 @@ int	get_next_line(int fd, char **line)
 	{
 		finished = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
-		if (finished == GNL_END_OF_FILE || finished == GNL_ERROR)
-			clear_buffer(&buffers[fd]);
-		if (finished == GNL_END_OF_FILE)
-			return (0);
-		if (finished == GNL_ERROR)
-			return (-1);
 	}
+	if (finished == GNL_END_OF_FILE || finished == GNL_ERROR)
+		clear_buffer(&buffers[fd]);
+	if (finished == GNL_END_OF_FILE)
+		return (0);
+	if (finished == GNL_ERROR)
+		return (-1);
 	return (1);
 }
