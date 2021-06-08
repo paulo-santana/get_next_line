@@ -63,7 +63,7 @@ static char	*merge_buffer_n(char *dest, char *src, size_t n)
 		dest_len = ft_strlen(dest);
 	result_len = dest_len + n;
 	result = malloc(sizeof(char) * (result_len + 1));
-	if (!result)
+	if (result == NULL)
 		return (NULL);
 	result[0] = '\0';
 	if (dest)
@@ -87,7 +87,7 @@ static int	append_next_chunk(int fd, char **new_line, char *buffer)
 	while (i < bytes_left && buffer[i] != '\n')
 		i++;
 	merged_str = merge_buffer_n(*new_line, buffer, i);
-	if (!merged_str)
+	if (merged_str == NULL)
 		return (GNL_ERROR);
 	if (*new_line)
 		free(*new_line);
@@ -110,9 +110,9 @@ int	get_next_line(int fd, char **line)
 	if (fd < 0 || fd >= FD_SETSIZE)
 		return (-1);
 	finished = 0;
-	if (!buffers[fd])
+	if (buffers[fd] == NULL)
 		buffers[fd] = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!buffers[fd])
+	if (buffers[fd] == NULL)
 		return (-1);
 	while (!finished)
 	{

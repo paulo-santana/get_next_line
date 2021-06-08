@@ -20,33 +20,12 @@ void	*ft_calloc(size_t count, size_t size)
 
 	full_size = count * size;
 	buffer = malloc(full_size);
-	if (!buffer)
+	if (buffer == NULL)
 		return (NULL);
 	i = 0;
 	while (i < full_size)
 		buffer[i++] = 0;
 	return (buffer);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	size_t	i;
-	char	*s;
-	char	*d;
-
-	i = -1;
-	s = (char *)src;
-	d = (char *)dest;
-	if (dest < src)
-		while (++i < n)
-			d[i] = s[i];
-	else if (dest > src)
-	{
-		i++;
-		while (i < n--)
-			d[n] = s[n];
-	}
-	return (dest);
 }
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
