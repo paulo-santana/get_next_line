@@ -18,7 +18,7 @@
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
-void	*ft_memmove(void *dest, const void *src, size_t n);
+void	*ft_calloc(size_t count, size_t size);
 
 /**
  * Retrieves a string that ends with a newline charactere from the file
@@ -27,8 +27,12 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 
 int		get_next_line(int fd, char **line);
 
+//# define GNL_ERROR -1
+//# define GNL_END_OF_LINE 1
+//# define GNL_END_OF_FILE 2
 # define GNL_ERROR -1
-# define GNL_END_OF_LINE 1
-# define GNL_END_OF_FILE 2
+# define GNL_END_OF_FILE 0
+# define GNL_LINE_READ 1
+# define GNL_NO_NEWLINE 2
 
 #endif
