@@ -29,7 +29,8 @@ void	*ft_calloc(size_t count, size_t size);
 int		get_next_line(int fd, char **line);
 
 # define GNL_ERROR -1
-# define GNL_END_OF_LINE 1
-# define GNL_END_OF_FILE 2
+# define GNL_END_OF_FILE 0
+# define GNL_LINE_READ 1
+# define GNL_NO_NEWLINE 2
 
 #endif

@@ -93,10 +93,10 @@ static int	append_next_chunk(int fd, char **new_line, char *buffer)
 		free(*new_line);
 	*new_line = merged_str;
 	if (buffer[i] == '\n')
-		return (1);
+		return (GNL_LINE_READ);
 	if (bytes_left == 0)
 		return (GNL_END_OF_FILE);
-	return (0);
+	return (GNL_NO_NEWLINE);
 }
 
 int	get_next_line(int fd, char **line)
@@ -109,21 +109,17 @@ int	get_next_line(int fd, char **line)
 	*line = new_line;
 	if (fd < 0 || fd >= FD_SETSIZE)
 		return (-1);
-	finished = 0;
+	finished = GNL_NO_NEWLINE;
 	if (buffers[fd] == NULL)
 		buffers[fd] = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (buffers[fd] == NULL)
 		return (-1);
-	while (!finished)
+	while (finished == GNL_NO_NEWLINE)
 	{
 		finished = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
 	}
 	if (finished == GNL_END_OF_FILE || finished == GNL_ERROR)
 		clear_buffer(&buffers[fd]);
-	if (finished == GNL_END_OF_FILE)
-		return (0);
-	if (finished == GNL_ERROR)
-		return (-1);
-	return (1);
+	return (finished);
 }
