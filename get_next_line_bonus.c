@@ -30,24 +30,29 @@ void	clear_buffer(char **buffer)
 
 static size_t	move_buffer(char buffer[])
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	int		bytes_left;
+	size_t	buffer_len;
 
 	i = 0;
-	while (i < BUFFER_SIZE && buffer[i] != '\n')
+	buffer_len = ft_strlen(buffer);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
-	if (i == BUFFER_SIZE)
+	if (buffer[i] == '\0')
 		bytes_left = 0;
 	else
-		bytes_left = BUFFER_SIZE - i - 1;
+		bytes_left = buffer_len - i;
 	j = 0;
 	while (j < BUFFER_SIZE)
 	{
-		if (i < BUFFER_SIZE)
-			buffer[j++] = buffer[++i];
-		else
+		if (buffer[i] == '\0')
+		{
+			bytes_left = i - (i - bytes_left);
 			buffer[j++] = 0;
+			break ;
+		}
+		buffer[j++] = buffer[++i];
 	}
 	return (bytes_left);
 }
@@ -83,6 +88,8 @@ static int	append_next_chunk(int fd, char **new_line, char *buffer)
 		bytes_left = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_left == -1)
 		return (GNL_ERROR);
+	if (bytes_left < BUFFER_SIZE)
+		buffer[bytes_left] = '\0';
 	i = 0;
 	while (i < bytes_left && buffer[i] != '\n')
 		i++;
@@ -102,24 +109,24 @@ static int	append_next_chunk(int fd, char **new_line, char *buffer)
 int	get_next_line(int fd, char **line)
 {
 	char		*new_line;
-	int			finished;
+	int			result;
 	static char	*buffers[FD_SETSIZE];
 
 	new_line = NULL;
 	*line = new_line;
 	if (fd < 0 || fd >= FD_SETSIZE)
-		return (-1);
-	finished = GNL_NO_NEWLINE;
+		return (GNL_ERROR);
 	if (buffers[fd] == NULL)
 		buffers[fd] = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (buffers[fd] == NULL)
-		return (-1);
-	while (finished == GNL_NO_NEWLINE)
+		return (GNL_ERROR);
+	result = GNL_NO_NEWLINE;
+	while (result == GNL_NO_NEWLINE)
 	{
-		finished = append_next_chunk(fd, &new_line, buffers[fd]);
+		result = append_next_chunk(fd, &new_line, buffers[fd]);
 		*line = new_line;
 	}
-	if (finished == GNL_END_OF_FILE || finished == GNL_ERROR)
+	if (result == GNL_END_OF_FILE || result == GNL_ERROR)
 		clear_buffer(&buffers[fd]);
-	return (finished);
+	return (result);
 }
