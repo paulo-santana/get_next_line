@@ -57,7 +57,12 @@ static size_t	move_buffer(char buffer[])
 	return (bytes_left);
 }
 
-static char	*merge_buffer_n(char *dest, char *src, size_t n)
+/**
+ * Merges at most `n` chars from the buffer `buf` with the destination string
+ * `dest`
+ */
+
+static char	*merge_buffer_n(char *dest, char *buf, size_t n)
 {
 	size_t	dest_len;
 	size_t	result_len;
@@ -73,9 +78,18 @@ static char	*merge_buffer_n(char *dest, char *src, size_t n)
 	result[0] = '\0';
 	if (dest)
 		ft_strlcat(result, dest, dest_len + 1);
-	ft_strlcat(result + dest_len, src, n + 1);
+	ft_strlcat(result + dest_len, buf, n + 1);
 	return (result);
 }
+
+/**
+ * Fetches `BUFFER_SIZE` characters from file `fd` and append them to the
+ * string *new_line. If a \n is found during the read() call, it appends only
+ * the text until this \n and returns `GNL_LINE_READ`. If no newline character
+ * is found, it appends the whole buffer and returns `GNL_NO_NEWLINE`. If an
+ * error occurs, `GNL_ERROR` will be returned. And if we reached `fd`s end,
+ * `GNL_END_OF_FILE` will be returned.
+ * */
 
 static int	append_next_chunk(int fd, char **new_line, char *buffer)
 {
@@ -105,6 +119,11 @@ static int	append_next_chunk(int fd, char **new_line, char *buffer)
 		return (GNL_END_OF_FILE);
 	return (GNL_NO_NEWLINE);
 }
+
+/**
+ * Fetches the next string from file `fd` and put it in *line. The string
+ * will be truncated on the first \n encountered, or by the end of file.
+ * */
 
 int	get_next_line(int fd, char **line)
 {
