@@ -16,6 +16,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct s_buffer {
+	int		start;
+	int		next_nl;
+	int		end;
+	char	*data;
+}			t_buffer;
+
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
 void	*ft_calloc(size_t count, size_t size);
