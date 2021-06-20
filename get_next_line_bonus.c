@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 void	clear_buffer(char **buffer)
 {
@@ -70,7 +69,6 @@ static int	append_next_chunk(int fd, char **new_line, t_buffer *buf)
 	}
 	if (buf->end == -1)
 		return (GNL_ERROR);
-	//buf->data[buf->end] = '\0';
 	buf->next_nl = buf->start;
 	while (buf->next_nl < buf->end && buf->data[buf->next_nl] != '\n')
 		buf->next_nl++;
